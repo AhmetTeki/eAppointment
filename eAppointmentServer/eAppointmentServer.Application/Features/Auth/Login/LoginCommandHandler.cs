@@ -12,7 +12,7 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> _userManager, IJw
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
     {
-        var appUser = await _userManager.Users.FirstAsync(p => p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail,
+        var appUser = await _userManager.Users.FirstOrDefaultAsync(p => p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail,
             cancellationToken);
 
         if (appUser is null)

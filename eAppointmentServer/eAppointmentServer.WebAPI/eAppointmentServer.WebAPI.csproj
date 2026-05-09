@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\eAppointmentServer.Application\eAppointmentServer.Application.csproj" />
     <ProjectReference Include="..\eAppointmentServer.Infrasracture\eAppointmentServer.Infrasracture.csproj" />
   </ItemGroup>
