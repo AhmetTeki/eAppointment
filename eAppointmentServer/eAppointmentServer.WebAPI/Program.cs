@@ -18,11 +18,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(x => x
-    .AllowAnyHeader()
-    .AllowCredentials()
-    .AllowAnyMethod()
-    .SetIsOriginAllowed(t => true));
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -31,6 +27,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(x => x
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .AllowAnyMethod()
+    .SetIsOriginAllowed(t => true));
 
 app.UseAuthorization();
 
