@@ -21,7 +21,7 @@ public sealed class JwtProvider : IJwtProvider
         
         DateTime expires = DateTime.Now.AddDays(1);
 
-        SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes("eAppointmentSecretKey"));
+        SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes("eAppointment$SuperSecretKey2024!XyZ"));
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
         
         JwtSecurityToken jwtSecurityToken = new(
