@@ -38,10 +38,20 @@
             <td>{{ item.fullName }}</td>
             <td>{{ item.department.name }}</td>
             <td>
-              <button class="btn btn-sm btn-outline-primary me-2" title="update">
+              <button
+                (click)="get(item)"
+                data-bs-toggle="modal"
+                data-bs-target="#updateModal"
+                class="btn btn-sm btn-outline-primary me-2"
+                title="update"
+              >
                 <i class="fa-solid fa-edit"></i>
               </button>
-              <button class="btn btn-sm btn-outline-danger" title="delete">
+              <button
+                (click)="delete(item.id)"
+                class="btn btn-sm btn-outline-danger"
+                title="delete"
+              >
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>
@@ -90,6 +100,64 @@
           <div class="form-group">
             <label>Department</label>
             <select class="form-control" name="department" [(ngModel)]="createModel.department">
+              <option>Select...</option>
+              @for (item of departmens; track item) {
+                <option [value]="item.value">{{ item.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-dark w-100">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Update Doctor</h1>
+        <button
+          type="button"
+          #updateDoctorModalCloseBtn
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form #updateForm="ngForm" formValidate autocomplete="off" (ngSubmit)="update(updateForm)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              [(ngModel)]="updateModel.firstName"
+              name="updateFirstName"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              [(ngModel)]="updateModel.lastName"
+              name="updateLastName"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <select
+              class="form-control"
+              name="updateDepartment"
+              [(ngModel)]="updateModel.department"
+            >
               <option>Select...</option>
               @for (item of departmens; track item) {
                 <option [value]="item.value">{{ item.name }}</option>

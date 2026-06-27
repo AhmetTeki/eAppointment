@@ -4,6 +4,7 @@ export class DoctorModel {
   lastName: string = '';
   fullName: string = '';
   department: DepartmentModel = new DepartmentModel();
+  departmentValue: Number = 0;
 }
 
 export class DepartmentModel {

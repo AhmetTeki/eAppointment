@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  viewChild,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Http } from '../../Services/http';
 import { DoctorModel } from '../../Models/doctor.model';
@@ -20,9 +27,17 @@ export class Doctors implements OnInit {
     | ElementRef<HTMLButtonElement>
     | undefined;
 
-  constructor(private http: Http) {}
+  @ViewChild('updateDoctorModalCloseBtn') updateDoctorModalCloseBtn:
+    | ElementRef<HTMLButtonElement>
+    | undefined;
+
+  constructor(
+    private http: Http,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   createModel: DoctorModel = new DoctorModel();
+  updateModel: DoctorModel = new DoctorModel();
 
   ngOnInit(): void {
     this.getAll();
@@ -31,15 +46,34 @@ export class Doctors implements OnInit {
   getAll() {
     this.http.post<DoctorModel[]>('Doctors/GetAll', {}, (res) => {
       this.doctors = res.data;
+      this.cdr.detectChanges();
     });
   }
   add(form: NgForm) {
     if (form.valid) {
       this.http.post<string>('Doctors/Create', this.createModel, (res) => {
-        console.log(res);
         this.getAll();
         this.addDoctorModalCloseBtn?.nativeElement.click();
         this.createModel = new DoctorModel();
+      });
+    }
+  }
+  delete(id: string) {
+    this.http.post<string>('Doctors/DeleteById', { id }, (res) => {
+      this.getAll();
+      alert('Kayıt başarıyla silindi.');
+    });
+  }
+
+  get(data: DoctorModel) {
+    this.updateModel = { ...data };
+  }
+
+  update(form: NgForm) {
+    if (form.valid) {
+      this.http.post<string>('Doctors/Update', this.updateModel, (res) => {
+        this.getAll();
+        this.updateDoctorModalCloseBtn?.nativeElement.click();
       });
     }
   }
