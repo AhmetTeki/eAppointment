@@ -13,10 +13,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { departments } from '../../Constans';
 import { FormValidateDirective } from 'form-validate-angular';
+import { DoctorPipe } from '../../pipe/doctor-pipe';
 
 @Component({
   selector: 'app-doctors',
-  imports: [RouterLink, CommonModule, FormsModule, FormValidateDirective],
+  imports: [RouterLink, CommonModule, FormsModule, FormValidateDirective, DoctorPipe],
   templateUrl: './doctors.html',
   styleUrl: './doctors.css',
 })
@@ -36,6 +37,7 @@ export class Doctors implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
+  search: string = '';
   createModel: DoctorModel = new DoctorModel();
   updateModel: DoctorModel = new DoctorModel();
 
