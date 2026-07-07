@@ -105,6 +105,18 @@
             />
           </div>
           <div class="form-group">
+            <label>Identity Number</label>
+            <input
+              type="text"
+              minlength="11"
+              maxlength="11"
+              [(ngModel)]="createModel.identityNumber"
+              name="identityNumber"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label>City</label>
             <input
               type="text"
@@ -175,6 +187,18 @@
               type="text"
               [(ngModel)]="updateModel.lastName"
               name="updateLastName"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Identity Number</label>
+            <input
+              type="text"
+              minlength="11"
+              maxlength="11"
+              [(ngModel)]="updateModel.identityNumber"
+              name="updateIdentityNumber"
               class="form-control"
               required
             />
