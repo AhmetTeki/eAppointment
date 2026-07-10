@@ -6,7 +6,12 @@
   <div class="row">
     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mt-1">
       <label>Department</label>
-      <select name="department" [(ngModel)]="selectedDepartmentValue" class="form-control">
+      <select
+        (change)="getAllDoctor()"
+        name="department"
+        [(ngModel)]="selectedDepartmentValue"
+        class="form-control"
+      >
         <option [value]="0">Select...</option>
         @for (department of departments; track department) {
           <option [value]="department.value">{{ department.name }}</option>
@@ -16,7 +21,12 @@
     @if (selectedDepartmentValue > 0) {
       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mt-1">
         <label>Doctor</label>
-        <select name="doctor" [(ngModel)]="selectedDoctorId" class="form-control">
+        <select
+          (change)="GetAllAppointments()"
+          name="doctor"
+          [(ngModel)]="selectedDoctorId"
+          class="form-control"
+        >
           <option [value]="0">Select...</option>
           @for (doctor of doctors; track doctors) {
             <option [value]="doctor.id">{{ doctor.fullName }}</option>
@@ -25,8 +35,15 @@
       </div>
     }
   </div>
-
-  <div class="mt-2">
-    <dx-scheduler id="scheduler"></dx-scheduler>
-  </div>
+  @if (selectedDoctorId) {
+    <div class="mt-2">
+      <dx-scheduler
+        currentView="week"
+        [startDayHour]="9"
+        [endDayHour]="18"
+        [showAllDayPanel]="false"
+        textExpr="title"
+      ></dx-scheduler>
+    </div>
+  }
 </div>
