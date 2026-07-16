@@ -107,4 +107,28 @@ export class Home {
       });
     }
   }
+
+  onAppointmentDeleted(event: any) {
+    event.cancel = true;
+  }
+  onAppointmentDeleting(event: any) {
+    event.cancel = true;
+    this.http.post('Appointments/Delete', { id: event.appointmentData.id }, (res) => {
+      alert('Succes');
+      this.GetAllAppointments();
+    });
+  }
+
+  onAppointmentUpdating(event: any) {
+    event.cancel = true;
+    const data = {
+      id: event.oldData.id,
+      startDate: this.date.transform(event.newData.startDate),
+      endDate: this.date.transform(event.newData.endDate),
+    };
+    this.http.post('Appointments/Update', data, (res) => {
+      alert('Succes');
+      this.GetAllAppointments();
+    });
+  }
 }
