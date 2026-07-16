@@ -9,9 +9,9 @@ public sealed class Appointment
 
     public Guid Id { get; set; }
     public Guid DoctorId { get; set; }
-    private Doctor? Doctor;
+    public Doctor? Doctor{ get; set; }
     public Guid PatientId { get; set; }
-    public Patient? Patient ;
+    public Patient? Patient { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsCompleted { get; set; }
