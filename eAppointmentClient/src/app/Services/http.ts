@@ -8,10 +8,15 @@ import { Error } from './error';
   providedIn: 'root',
 })
 export class Http {
+  token: string = '';
   constructor(
     private http: HttpClient,
     private error: Error,
-  ) {}
+  ) {
+    if (localStorage.getItem('token')) {
+      this.token = localStorage.getItem('token') ?? '';
+    }
+  }
 
   post<T>(
     apiUrl: string,
@@ -19,16 +24,22 @@ export class Http {
     callback: (res: ResultModel<T>) => void,
     errorCallback?: (err: HttpErrorResponse) => void,
   ) {
-    this.http.post<ResultModel<T>>(`${api}/${apiUrl}`, body).subscribe({
-      next: (res) => {
-        callback(res);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error.errorHandler(err);
-        if (errorCallback !== undefined) {
-          errorCallback(err);
-        }
-      },
-    });
+    this.http
+      .post<ResultModel<T>>(`${api}/${apiUrl}`, body, {
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+        },
+      })
+      .subscribe({
+        next: (res) => {
+          callback(res);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.error.errorHandler(err);
+          if (errorCallback !== undefined) {
+            errorCallback(err);
+          }
+        },
+      });
   }
 }

@@ -5,12 +5,14 @@ using eAppointmentServer.Application.Features.Appointment.GetAllDoctorByDepartma
 using eAppointmentServer.Application.Features.Appointment.GetPatientByIdentityNumber;
 using eAppointmentServer.Application.Features.Appointment.UpdateAppointment;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointmentServer.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public sealed class AppointmentsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost]

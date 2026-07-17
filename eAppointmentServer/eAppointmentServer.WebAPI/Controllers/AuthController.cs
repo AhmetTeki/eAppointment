@@ -7,6 +7,7 @@ namespace eAppointmentServer.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
+
 public sealed class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost]

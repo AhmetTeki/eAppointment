@@ -3,12 +3,14 @@ using eAppointmentServer.Application.Features.Doctors.DeleteDoctorById;
 using eAppointmentServer.Application.Features.Doctors.GetAllDoctor;
 using eAppointmentServer.Application.Features.Doctors.UpdateDoctor;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAppointmentServer.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public sealed class DoctorsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost]

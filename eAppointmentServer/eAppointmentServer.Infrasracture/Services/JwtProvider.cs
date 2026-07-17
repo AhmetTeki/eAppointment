@@ -3,11 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using eAppointmentServer.Application.Services;
 using eAppointmentServer.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace eAppointmentServer.Infrasracture.Services;
 
-public sealed class JwtProvider : IJwtProvider
+public sealed class JwtProvider(IConfiguration _configuration) : IJwtProvider
 {
     public string CreateToken(AppUser user)
     {
@@ -21,12 +22,12 @@ public sealed class JwtProvider : IJwtProvider
         
         DateTime expires = DateTime.Now.AddDays(1);
 
-        SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes("eAppointment$SuperSecretKey2024!XyZ"));
+        SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:SecretKey").Value ?? ""));
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
         
         JwtSecurityToken jwtSecurityToken = new(
-            issuer: "Ahmet Tekin",
-            audience: "",
+            issuer: _configuration.GetSection("Jwt:Issuer").Value,
+            audience: _configuration.GetSection("Jwt:Audience").Value,
             claims: claims,
             notBefore: DateTime.Now,
             expires: expires,
